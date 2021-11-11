@@ -102,14 +102,13 @@ public class QRController {
 	@GetMapping(value = "/downloadRQ/{codeText}/{width}/{height}")
 	public ResponseEntity<byte[]> downloadRQ(@PathVariable("codeText") String codeText,
 			@PathVariable("width") Integer width, @PathVariable("height") Integer height) {
-		byte[] qr;
+		byte[] result = new byte[0];
 		try {
-			qr = qRService.downloadRQ(codeText, width, height);
-			return ResponseEntity.status(HttpStatus.OK).body(qr);
+			result = qRService.downloadRQ(codeText, width, height);
 		} catch (WriterException | IOException e) {
 			e.printStackTrace();
-			return ResponseEntity.internalServerError().body(null);
 		}
+		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
 
 }
